@@ -9,7 +9,7 @@
   "author": "Biswa",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+   "express": "^4.17.1",
     "discord.js": "^12.3.1",
     "quick.db": "^7.1.1",
     "parse-ms": "^2.1.0",
@@ -20,7 +20,7 @@
     "winston": "^3.3.3",
     "mysql": "^2.18.1",
     "axios": "^0.20.0",
-    "cheerio": "^0.22.0,
+    "cheerio": "^0.22.0",
     "dotenv": "^8.2.0"
   }
 }
