@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args, utils) => {
 
   let moneyEmbed = new Discord.MessageEmbed()
   .setColor(getHexColor())
-  .setTitle(`**${user.tag.toUpperCase}'S ACCOUNT BALANCE ━━━━━'**`)
+  .setTitle(`**${user.tag.toUpperCase()}'S POINTS ━━━━━**`)
   .setDescription(`\n` + `Plase note that data (session) will reset after [here](https://pcgameson.com/fortrex/terms)`) 
   .setThumbnail(user.displayAvatarURL())
   .addField(`Purchase`, "`" + `${bal}` + " Points`", true)
