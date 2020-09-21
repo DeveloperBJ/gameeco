@@ -1,51 +1,55 @@
+require('dotenv').config()
 const Discord = require("discord.js");
-const db = require("quick.db");
 const ms = require("parse-ms");
-const config = require('../config.json')
-const Prefix = config.prefix;
+const { Ecobase } = require('mongo.eco')
+const config = require('../config.json');
+const eco = new Ecobase(process.env.MONGO)
 
-module.exports.run = async (bot, message, args) => {
-  if(!message.content.startsWith(Prefix))return;  
+module.exports.run = async (client, message, args) => {
+  const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
+    if(guildPrefix === null) guildPrefix = config.prefix;
+    if(!message.content.startsWith(guildPrefix))return;   
 
-  let user = message.author;
+ // First send a message
+let m = await message.channel.send('collecting...')
 
-  let timeout = 86400000;
-  let amount = 250;
+// Then setup the timeout in ms. 300000ms = 5 Mintes
+let timeout = 8.64e+7
 
-  let daily = await db.fetch(`daily_${message.guild.id}_${user.id}`);
-  function getHexColor(){
-    let mColor = message.member.displayHexColor;
-    if(mColor == null){
-      return config.primary;
-    }else{
-      return mColor;
-    }
-   }
+// Define eco.mongo as db
+const db = eco.mongo()
+
+// Fetch the time of last Beg...
+let lastBeg = await db.fetch(`lastDaily_${message.author.id}`)
+
+// Then setup the amount to give after beg...
+let amount = Math.floor(Math.random() * 800)
+
+// If the user already claimed his beg
+if (lastBeg !== null && timeout - (Date.now() - lastBeg) > 0) {
+    let time = ms(timeout - (Date.now() - lastBeg));
+m.edit(`${config.error_icon} **You've already collected your daily rewards**` + `\nClaim again in ${time.hours}h ${time.minutes}m ${time.seconds}s`)
+}
+
+// If the user did not begged in 5 minutes...
+else{
+m.edit(`You've just collected  ${amount} :dollar:**`)
+
+// Then add the amount to user's account...
+eco.add(message.author.id, amount)
+
+// Then set the cooldown...
+db.set(`lastDaily_${message.author.id}`, Date.now())
+
+}
   
-  if (daily !== null && timeout - (Date.now() - daily) > 0) {
-    let time = ms(timeout - (Date.now() - daily));
-  
-    let timeEmbed = new Discord.MessageEmbed()
-    .setColor(getHexColor())
-    .setDescription(`:x: You've already collected your daily points\n\nCollect it again in ${time.hours}h ${time.minutes}m ${time.seconds}s `);
-    message.channel.send(timeEmbed)
-  } else {
-    let moneyEmbed = new Discord.MessageEmbed()
-  .setColor(getHexColor())
-  .setDescription(`:white_check_mark: You've collected your daily reward of ${amount} points`);
-  message.channel.send(moneyEmbed)
-  db.add(`money_${message.guild.id}_${user.id}`, amount)
-  db.set(`daily_${message.guild.id}_${user.id}`, Date.now())
-
-
-  }
 };
 
 
 module.exports.help = {
     name: "daily",
-    type: "fun",
-    usage: "`daily`",
-    about: "Collect your daily rewards!",
-    aliases: ["day"]
+    type:"fun",
+    usage:"`daily` or `day`",
+    about:"To collect daily coins!",
+    aliases: ["d", "day"]
   };
