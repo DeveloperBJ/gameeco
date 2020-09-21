@@ -12,8 +12,6 @@ const client = bot;
 const { Ecobase } = require('mongo.eco')
 const config = require('./config.json');
 const eco = new Ecobase(process.env.MONGO)
-const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
 
 bot.config = config;
 bot.commands = new Discord.Collection();
@@ -55,9 +53,9 @@ fs.readdir("./commands/", (err, files) => {
     console.log(`${bot.user.username} is online`);
     bot.user.setStatus('dnd');
     const activities_list = [
-        prefix +'prefix',
-        prefix + 'help',
-        prefix + 'commands',
+        config.prefix +'prefix',
+        config.prefix + 'help',
+        config.prefix + 'commands',
         "gg.gg/trexbot"
     ];
     setInterval(() => {
