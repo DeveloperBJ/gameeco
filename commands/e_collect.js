@@ -8,8 +8,8 @@ const eco = new Ecobase(process.env.MONGO)
 module.exports.run = async (client, message, args) => {
 
   const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-  if(guildPrefix === null) guildPrefix = config.prefix;
-if(!message.content.startsWith(guildPrefix))return;  
+      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
+if(!message.content.startsWith(prefix))return;  
 
  // First send a message
 let m = await message.channel.send('collecting...')
