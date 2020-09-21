@@ -1,45 +1,49 @@
+
+require('dotenv').config()
 const Discord = require("discord.js");
-const db = require("quick.db");
-const config = require('../config.json')
-const Prefix = config.prefix;
+const { Ecobase } = require('mongo.eco')
+const config = require('../config.json');
+const eco = new Ecobase(process.env.MONGO)
+const ms = require("parse-ms");
 
+module.exports.run = async (client, message, args) => {
+  const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
+  if(guildPrefix === null) guildPrefix = config.prefix;
 
-module.exports.run = async (bot, message, args, utils) => {
-  if(!message.content.startsWith(Prefix))return;  
-
-  let user = message.mentions.members.first() || message.author;
-
-  let bal = db.fetch(`money_${message.guild.id}_${user.id}`)
-
-  if (bal === null) bal = 0;
-
-  let bank = await db.fetch(`bank_${message.guild.id}_${user.id}`)
-  if (bank === null) bank = 0;
-  
+  if(!message.content.startsWith(guildPrefix))return; 
   function getHexColor(){
     let mColor = message.member.displayHexColor;
     if(mColor == null){
-      return config.purple;
+      return botconfig.primary;
     }else{
       return mColor;
     }
    }
+  
+  let Logs = ["Hold on...", "Fetching accound details...", "collecting data...", "Here's your account balance..."]
+  let RandomLogs = Math.floor((Math.random() * Logs.length));
+  let m = await message.channel.send(Logs[RandomLogs])
+  var user = message.mentions.users.first() || message.author;
+  var bal = await eco.fetch(user.id)
 
-  let moneyEmbed = new Discord.MessageEmbed()
+  // If there is no balance, make it to 0
+  if(bal == null) var bal = 0
+
+  const account = new Discord.MessageEmbed()
+  .setTitle(`${user.username.toUpperCase()}'S ACCOUNT BALANCE ━━━━`)
+  .setDescription(`Wallet: **${bal} coins**`)
+  .setTimestamp()
+  .setFooter(`Requested by ${message.author.tag}`)
   .setColor(getHexColor())
-  .setTitle(`**${user.tag.toUpperCase()}'S POINTS ━━━━━**`)
-  .setDescription(`\n` + `Plase note that data (session) will reset after [here](https://pcgameson.com/fortrex/terms)`) 
-  .setThumbnail(user.displayAvatarURL())
-  .addField(`Purchase`, "`" + `${bal}` + " Points`", true)
-  .addField(`Saved`, "`" + `${bank}` + " Points`", true)
-  // .setDescription(`**${user}'s Balance**\n\nPocket: ${bal}\nBank: ${bank}`);
-  message.channel.send(moneyEmbed)
+  m.edit(account)
+  
 };
+
 
 module.exports.help = {
     name: "balance",
-    type: "fun",
-    usage: "`bal `",
-    about: "To check balance/points ",
+    type:"fun",
+    usage:"`bal` or `balance`",
+    about:"To display how many coins user have.",
     aliases: ["bal"]
   };
