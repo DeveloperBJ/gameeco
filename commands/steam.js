@@ -45,11 +45,11 @@ module.exports.run = async (bot, message, args) => {
 
           const WeaponEmbed = new Discord.MessageEmbed();
           // WeaponEmbed.setTitle(`:mag: Found result for ${WeaponName}`);
-          WeaponEmbed.setAuthor(`Found result for ${WeaponName}`, 'https://i.imgur.com/NyQucPe.png', gameLink)
+          WeaponEmbed.setTitle(`**RESULT FOR ${WeaponName.toUpperCase()}** ━━━━`)
           WeaponEmbed.setColor(getHexColor())
           WeaponEmbed.setThumbnail(getAppIcon)
-          WeaponEmbed.addField("Title", WeaponType, false);
-          WeaponEmbed.addField("Steam App ID", getLink, false);
+          WeaponEmbed.addField("Title", WeaponType, true);
+          WeaponEmbed.addField("App ID", getLink, true);
 
           WeaponEmbed.addField("Playing now", `${WeaponAmmo} Players`, true);
           
@@ -69,7 +69,7 @@ module.exports.run = async (bot, message, args) => {
       }
     });
   if(msg === ''){
-    return message.reply('Please specify the game, like this `!steam dota 2`')
+    return message.reply('Please specify the game, like this `${prefix}steam dota 2`')
   }
 };
 
