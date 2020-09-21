@@ -1,12 +1,19 @@
+require('dotenv').config()
 const Discord = require('discord.js');
+const { Ecobase } = require('mongo.eco')
+const eco = new Ecobase(process.env.MONGO)
+
 const config = require('../config.json');
+const db = eco.mongo();
 
 module.exports.run = async (bot, message, args) => {
-  if(message.author.bot) return;
-  let prefix = config.prefix;
   
-  if(!message.content.startsWith(prefix)) return;
-  
+  const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
+    if(guildPrefix === null) guildPrefix = config.prefix;
+
+   if(message.author.bot) return;
+  if(!message.content.startsWith(guildPrefix)) return;
+  const user = message.mentions.users.first();
   const m = await message.channel.send("Hold on .....")
   function getHexColor(){
     let mColor = message.member.displayHexColor;
@@ -21,8 +28,8 @@ module.exports.run = async (bot, message, args) => {
   .setColor(getHexColor())
   .setTimestamp()
   .addField("Latency", `${m.createdTimestamp - message.createdTimestamp}ms`, true)
-  .addField("API Latency", `${Math.round(bot.ws.ping)}ms`, true)
-  .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL());
+  .addField("API Latency", `${Math.round(bot.ws.ping)}ms `, true)
+  .setFooter(`Requested by ${message.author.tag}`);
   m.edit(pong)
 }
 
