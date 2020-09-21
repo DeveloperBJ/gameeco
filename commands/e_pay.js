@@ -13,7 +13,6 @@ module.exports.run = async (bot, message, args) => {
   
   if(message.author.bot) return;
   const  sender = await eco.fetch(`${message.author.id}`)
-  let prefix = config.prefix;
   const user = message.mentions.users.first();
   
   if(!user){
