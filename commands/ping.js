@@ -9,10 +9,10 @@ const db = eco.mongo();
 module.exports.run = async (bot, message, args) => {
   
   const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-    if(guildPrefix === null) guildPrefix = config.prefix;
+      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
 
    if(message.author.bot) return;
-  if(!message.content.startsWith(guildPrefix)) return;
+  if(!message.content.startsWith(prefix)) return;
   const user = message.mentions.users.first();
   const m = await message.channel.send("Hold on .....")
   function getHexColor(){
