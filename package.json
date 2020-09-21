@@ -1,7 +1,7 @@
 {
-  "name": "gameeco",
-  "version": "1.0.2",
-  "description": "game econemy much more.",
+  "name": "ecobot",
+  "version": "0.0.2",
+  "description": "eco bot",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,18 +9,18 @@
   "author": "Biswa",
   "license": "ISC",
   "dependencies": {
-   "express": "^4.17.1",
+    "axios": "^0.20.0",
+    "cheerio": "^1.0.0-rc.3",
+    "discord-giveaways": "^4.2.1",
     "discord.js": "^12.3.1",
-    "quick.db": "^7.1.1",
+    "dotenv": "^8.2.0",
+    "entities": "^2.0.3",
+    "mongo.eco": "^2.0.2",
     "parse-ms": "^2.1.0",
+    "ms": "^2.1.2",
     "request": "^2.88.2",
     "valid-url": "^1.0.9",
-    "entities": "^2.0.3",
-    "discord-giveaways": "^4.2.1",
     "winston": "^3.3.3",
-    "mysql": "^2.18.1",
-    "axios": "^0.20.0",
-    "cheerio": "^0.22.0",
-    "dotenv": "^8.2.0"
+    "yt-search": "^2.3.1"
   }
 }
