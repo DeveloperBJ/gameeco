@@ -13,7 +13,6 @@ const { Ecobase } = require('mongo.eco')
 const config = require('./config.json');
 const eco = new Ecobase(process.env.MONGO)
 
-const db = eco.mongo;
 
 bot.config = config;
 bot.commands = new Discord.Collection();
@@ -67,13 +66,15 @@ fs.readdir("./commands/", (err, files) => {
   
     bot.on("message", async message => {
       if(!message.guild) return;
-      const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-      if(guildPrefix == null) return config.prefix;
+      const db = eco.mongo;
 
+      const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
+      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
+      
       if (message.author.bot) return;
       if (message.channel.type === "dm") return;
       let messageArray = message.content.split(" ");
-      let args = message.content.slice(guildPrefix.length).trim().split(/ +/g);
+      let args = message.content.slice(prefix.length).trim().split(/ +/g);
       let cmd = args.shift().toLowerCase();
       let commandfile;
   
@@ -83,7 +84,7 @@ fs.readdir("./commands/", (err, files) => {
         commandfile = bot.commands.get(bot.aliases.get(cmd));
       }
   
-      if (!message.content.startsWith(guildPrefix)) return;
+      if (!message.content.startsWith(prefix)) return;
   
   
       try {
@@ -142,7 +143,6 @@ function onExit(error) {
         process.exit(0);
     }
 };
-/// Bot Token
 
 bot.login(process.env.TOKEN)
 
