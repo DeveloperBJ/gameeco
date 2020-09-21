@@ -67,8 +67,8 @@ fs.readdir("./commands/", (err, files) => {
   
     bot.on("message", async message => {
       if(!message.guild) return;
-      const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-      if(guildPrefix === null) guildPrefix = 't!';
+      let guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
+      if(guildPrefix == null) return guildPrefix = config.prefix;
 
       if (message.author.bot) return;
       if (message.channel.type === "dm") return;
