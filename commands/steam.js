@@ -9,8 +9,8 @@ const eco = new Ecobase(process.env.MONGO)
 const db = eco.mongo();
 module.exports.run = async (bot, message, args) => {
   const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-    if(guildPrefix === null) guildPrefix = config.prefix;
-    if(!message.content.startsWith(guildPrefix))return;  
+      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
+    if(!message.content.startsWith(prefix))return;  
   let command = guildPrefix + module.exports.help.name + 1;
   let msg = message.content.slice(command.length);
 
