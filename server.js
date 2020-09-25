@@ -162,7 +162,3 @@ fs.readdir("./commands/", (err, files) => {
 
 bot.login(process.env.TOKEN)
 
-process.on('SIGINT', onExit);
-process.on('SIGTERM', onExit);
-process.on('uncaughtException', onExit);
-
