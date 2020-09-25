@@ -20,12 +20,10 @@ module.exports.run = async (bot, message, args) => {
     .then(response => {
       const loadData = cheerio.load(response.data);
       const WeaponContainer = loadData("table.common-table tbody tr");
-      const Game404 = loadData("div#content-wrapper");
       for (let i = 0; i < 1; i++) {
         const ItemCon = loadData(WeaponContainer[i]).find("td.left a")[0];
         const ItemAmmo = loadData(WeaponContainer[i]).find("td.right.num")[0];
         const ItemIcon = loadData(WeaponContainer[i]).find("td img")[0];
-        const Item404 = loadData(Game404[i]).find("div.content p")[0];
         if (ItemCon) {
           const WeaponType = loadData(ItemCon).text();
           const WeaponAmmo = loadData(ItemAmmo).text();
@@ -64,8 +62,7 @@ module.exports.run = async (bot, message, args) => {
           }, 2000);
           // console.log(WeaponIcon);
         }
-        if (Item404.startsWith("0"))
-          return message.reply("try to search different keyword");
+      
       }
     });
   if(msg === ''){
