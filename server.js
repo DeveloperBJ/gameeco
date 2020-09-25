@@ -157,55 +157,6 @@ fs.readdir("./commands/", (err, files) => {
 
   })
 
-
-
-
-
-let botReady = false;
-let lastTimestamp = Math.floor(Date.now() / 1000);
-
-let Guild;
-let Channel;
-bot.on('ready', () => {
-    // bot.user.setStatus('online', `Spamming F5 on /r/${process.env.SUBREDDIT}`).then(logger.info('Changed status!')).catch('ready failed to change status', logger.error); // if you want to change the status of the bot and set the game playing to something specific you may uncomment this
-
-//     Guild = bot.guilds.cache.get(config.Server_ID);
-//     if (Guild) {
-//         Channel = Guild.channels.cache.get(config.Channel_ID);
-//     }
-
-//     if (!Channel) {
-//         logger.error('A matching channel could not be found. Please check your DISCORD_SERVERID and DISCORD_CHANNELID environment variables.');
-//         process.exit(1);
-//     } else {
-        logger.info('Ready');
-        botReady = true;
-//     }
-});
-
-bot.on('error', (error) => {
-    logger.error('Connection error', error);
-    botReady = false;
-});
-
-bot.on('reconnecting', () => {
-    logger.debug('Reconnecting');
-});
-
-
-function onExit(error) {
-    logger.info('Logging out before exiting');
-    bot.destroy();
-
-
-    if (error) {
-        logger.error('Unknown error during logout', error);
-        process.exit(-1);
-    } else {
-        logger.info('Logout success');
-        process.exit(0);
-    }
-};
 /// Bot Token
 // bot.login(config.Token);
 
