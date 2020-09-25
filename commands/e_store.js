@@ -8,18 +8,18 @@ const db = eco.mongo();
 module.exports.run = async (bot, message, args) => {
 
     const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-    if(guildPrefix === null) guildPrefix = config.prefix;
+  var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
 
-    if(!message.content.startsWith(guildPrefix))return;  
+    if(!message.content.startsWith(prefix))return;  
     let user = message.author;
 
     let author = eco.fetch(`${message.author.id}`)
 
     let storeEmbed = new Discord.MessageEmbed()
-    .setTitle(`**${bot.user.username.toUpperCase()}**'S STORE -----`)
-    .addField(`1.Game Coupon`, `cost: 9600 coins`, true)
-    .addField(`2.GTA 5`,`cost: 9600 coins`, true)
-    .addField(`3.PayDay 2`, `cost: 11500 coins`, true)
+    .setTitle(`**${bot.user.username.toUpperCase()}'S STORE** ━━━━`)
+    .setDescription(`1.Premium Subscription`, `cost: 12800 coins`, true)
+    .addField(`2.Random Steam Code`,`cost: 9600 coins`, true)
+    .addField(`3.Random Game Code`, `cost: 11500 coins`, true)
 
     message.channel.send(storeEmbed);
 
