@@ -1,4 +1,3 @@
-
 require('dotenv').config()
 const Discord = require("discord.js");
 const { Ecobase } = require('mongo.eco')
@@ -30,12 +29,13 @@ module.exports.run = async (client, message, args) => {
   if(bal == null) var bal = 0
 
   const account = new Discord.MessageEmbed()
-  .setTitle(`${user.username.toUpperCase()}'S ACCOUNT BALANCE ━━━━`)
+  .setTitle(`${user.username.toUpperCase()}'S BALANCE ━━━━`)
   .setDescription(`Wallet: **${bal} coins**`)
   .setTimestamp()
   .setFooter(`Requested by ${message.author.tag}`)
   .setColor(getHexColor())
-  m.edit(account)
+  setTimeout(function(){ m.edit(`ahaha...data collected!`); }, 2200), 
+  m.edit(account);
   
 };
 
