@@ -10,12 +10,12 @@ const db = eco.mongo();
 module.exports.run = async (bot, message, args) => {
 
     const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
-    if(!message.content.startsWith(prefix))return;  
+    var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
+      if(!message.content.startsWith(prefix))return;    
     function getHexColor(){
         let mColor = message.member.displayHexColor;
         if(mColor == null){
-          return botconfig.primary;
+          return config.primary;
         }else{
           return mColor;
         }
@@ -29,11 +29,11 @@ module.exports.run = async (bot, message, args) => {
 
     let moneymore = new Discord.MessageEmbed()
     .setColor("RED")
-    .setDescription(`${config.error_icon} You are betting more than you have!`);
+    .setDescription(`:x: You are betting more than you have!`);
 
     let moneyhelp = new Discord.MessageEmbed()
     .setColor("RED")
-    .setDescription(`${config.error_icon} Specify an amount`);
+    .setDescription(`:x: You have to specify the amount!`);
 
     if (!money) return message.channel.send(moneyhelp);
     if (money > moneydb) return message.channel.send(moneymore);
@@ -48,16 +48,19 @@ module.exports.run = async (bot, message, args) => {
         money *= 2
         win = true;
     }
+    let replies = ['Wanna try more?','Yahooooo!','This is so cool?...','Awesome man!','Owo...noice!','Damn you are lucky!']
+    let result = Math.floor((Math.random() * replies.length));
+
     if (win) {
         let slotsEmbed1 = new Discord.MessageEmbed()
-            .setDescription(`${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\nYay! You won ${money} coins`)
-            .setColor(getHexColor())
+            .setDescription(`${slotItems[number[0]]} ▣ ${slotItems[number[1]]} ▣ ${slotItems[number[2]]}\n\n ${replies[result]} You have won **${money}** coins!`)
+            .setColor('GREEN')
         message.channel.send(slotsEmbed1)
         eco.add(`${message.author.id}`, money)
     } else {
         let slotsEmbed = new Discord.MessageEmbed()
-            .setDescription(`${slotItems[number[0]]} | ${slotItems[number[1]]} | ${slotItems[number[2]]}\n\n ${config.error_icon} You have lost ${money} coins by betting!`)
-            .setColor(getHexColor())
+            .setDescription(`${slotItems[number[0]]} ▣ ${slotItems[number[1]]} ▣ ${slotItems[number[2]]}\n\n :x: You have lost ${money} coins by betting!`)
+            .setColor('RED')
         message.channel.send(slotsEmbed)
         eco.subtract(`${message.author.id}`, money)
     }
