@@ -1,10 +1,7 @@
 require('dotenv').config()
 
 const Discord = require('discord.js');
-const request = require('request');
-const entities = require('entities');
 const logger = require('./log');
-const validUrl = require('valid-url');
 const fs = require("fs");
 const bot = new Discord.Client();
 const client = bot;
@@ -53,7 +50,7 @@ fs.readdir("./commands/", (err, files) => {
     console.log(`${bot.user.username} is online`);
     bot.user.setStatus('dnd');
     const activities_list = [
-        config.prefix +'prefix',
+        config.prefix +'set prefix',
         config.prefix + 'help',
         config.prefix + 'commands',
         "gg.gg/trexbot"
@@ -69,7 +66,9 @@ fs.readdir("./commands/", (err, files) => {
 
       const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
       var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
-      
+
+
+
       if (message.author.bot) return;
       if (message.channel.type === "dm") return;
       let messageArray = message.content.split(" ");
@@ -94,6 +93,71 @@ fs.readdir("./commands/", (err, files) => {
     }
     )
   })
+
+  bot.on("message", async message => {
+    let greetSet = await eco.fetch(`greet_${message.guild.id}`);
+    // ==== if null then settings turned on ====
+    if(greetSet) return;
+
+    let Logs = ["...that was funny?", "...xD", "...lol", "ahaha..", "Owo....", "...ahaha"];
+    let RandomLogs = Math.floor((Math.random() * Logs.length));
+    
+    if(message.content.startsWith('xD')){
+      await message.channel.send(Logs[RandomLogs]);
+    }
+    
+    if(message.content.startsWith('lol')){
+      await message.channel.send(Logs[RandomLogs]);
+    }
+
+    if(message.content.startsWith('lmao')){
+      await message.channel.send(Logs[RandomLogs]);
+    }
+
+    /*
+     ========= good morning greetings =====
+
+     */
+    let gms = ["...good morning peeps!", "ahaha....morining pros", "...very happy good morning!", "ahaha..GM", "Owo....GM", "...ahaha"];
+    let randomGms = Math.floor((Math.random() * gms.length));
+
+    if(message.content.startsWith('good morning')){
+      await message.channel.send(gms[randomGms]);
+    }
+
+    if(message.content.startsWith('Good morning')){
+      await message.channel.send(gms[randomGms]);
+    }
+
+    if(message.content.startsWith('Morning')){
+      await message.channel.send(gms[randomGms]);
+    }
+
+    /*
+
+    ======== Good Night Greetings =======
+
+    */
+   let gns = ['....good night', 'ahahaa...good night', '...good night pros', '...Owo ...good night'];
+   let randomGns = Math.floor((Math.random() * gns.length));
+
+   if(message.content.startsWith('Good night')){
+    await message.channel.send(gns[randomGns]);
+   }
+
+   if(message.content.startsWith('good night')){
+    await message.channel.send(gns[randomGns]);
+   }
+
+   if(message.content.startsWith('Good Night')){
+    await message.channel.send(gns[randomGns]);
+   }
+
+
+
+  })
+
+
 
 
 
@@ -142,6 +206,8 @@ function onExit(error) {
         process.exit(0);
     }
 };
+/// Bot Token
+// bot.login(config.Token);
 
 bot.login(process.env.TOKEN)
 
