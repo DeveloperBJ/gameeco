@@ -22,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
   if (!args[1]) {
     return message.reply('Please specify the amount!')
 }
-if (message.content.includes('-')) { 
+if (args[1].includes('-')) { 
     return message.reply(`Something went wrong! Don't include` + ' `-` symbol!')
 }
 if (sender < args[1]) {
@@ -32,13 +32,13 @@ if (sender < args[1]) {
   function getHexColor(){
     let mColor = message.member.displayHexColor;
     if(mColor == null){
-      return botconfig.primary;
+      return config.primary;
     }else{
       return mColor;
     }
    }
   let pong = new Discord.MessageEmbed()
-//   .setTitle("🏓 Pong!")
+  .setTitle("TRANSACTION SUCCESSFULL ━━━━")
   .setColor(getHexColor())
   .setTimestamp()
   .setDescription(`:white_check_mark: You have sent ${args[1]} coins to  ${user.username} `)
@@ -51,7 +51,8 @@ if (sender < args[1]) {
 module.exports.help = {
   name: "pay",
   type:"fun",
-  usage:"`pay <amount>`",
-  about:"Pay/donate coins to someone!",
-  aliases: ["send"],
+  usage:"`pay <mention> <amount>`",
+  about:"pay coins to someone!",
+  aliases: ["send", "donate"],
+
 }
