@@ -9,9 +9,9 @@ const eco = new Ecobase(process.env.MONGO)
 const db = eco.mongo();
 module.exports.run = async (bot, message, args) => {
   const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-      var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
-    if(!message.content.startsWith(prefix))return;  
-  let command = guildPrefix + module.exports.help.name + 1;
+  var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
+  if(!message.content.startsWith(prefix))return;    
+  let command = prefix + module.exports.help.name + 1;
   let msg = message.content.slice(command.length);
 
   let WeaponName = message.content.slice(command.length);
@@ -69,7 +69,7 @@ module.exports.run = async (bot, message, args) => {
       }
     });
   if(msg === ''){
-    return message.reply('Please specify the game, like this `${prefix}steam dota 2`')
+    return message.reply('Please specify the game, like this `!steam dota 2`')
   }
 };
 
