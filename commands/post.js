@@ -36,20 +36,39 @@ module.exports.run = async (client, message, args) => {
   function getImageUrl() {
     let imgURL = /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/;
     if (args[0] == null) {
-      return console.log('url not found');
+      return post.setTitle(`**Please add some content**`);
     } else if (imgURL.test(args[0])) {
       return post.setImage(tagName);
     }
     else {
-      return console.log('something went wrong');
+      return console.log('----> plain post detected');
+    }
+  }
+
+  let imgURL = /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/;
+  let isNotImg = imgURL.test(tagName) ? console.log('--->image url detected') : tagName;
+
+  function getPostContent() {
+    if (tagName !== null && imgURL.test(tagName)) {
+
+      return post.setDescription(tagDescription);
+
+    } else if (tagName !== null && imgURL.test(tagName) !== true) {
+
+      return post.setDescription(`${tagName} ${tagDescription}`);
+
+    } else {
+
+      return post.setDescription('**Error:** something went wong!')
     }
   }
   const post = new Discord.MessageEmbed()
     .setColor(getHexColor())
-    .setDescription(tagDescription)
-    getImageUrl()
+    .setDescription(`${isNotImg} ${tagDescription}`)
+  getImageUrl()
+  getPostContent()
   setTimeout(function () { p.edit(Logs[RandomLogs]), p.edit(post) }, 2200)
-  message.delete()
+  message.delete();
 
 
   // if(isImage) return message.reply('Invalid image url?');
