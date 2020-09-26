@@ -11,6 +11,9 @@ module.exports.run = async (bot, message, args) => {
   const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
   var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
   if(!message.content.startsWith(prefix))return;    
+  if(!args[0]){
+    return message.channel.send('You have to specify the game name `'+ prefix +'data 2`')
+  }
   let command = prefix + module.exports.help.name + 1;
   let msg = message.content.slice(command.length);
 
@@ -65,9 +68,7 @@ module.exports.run = async (bot, message, args) => {
       
       }
     });
-  if(msg === ''){
-    return message.reply('Please specify the game, like this `!steam dota 2`')
-  }
+  
 };
 
 module.exports.help = {
