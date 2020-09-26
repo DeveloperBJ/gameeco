@@ -1,14 +1,16 @@
 
+require('dotenv').config()
 const ms = require('ms');
 const Discord = require('discord.js');
 const { Ecobase } = require('mongo.eco')
+const eco = new Ecobase(process.env.MONGO)
+
 const config = require('../config.json');
-const eco = new Ecobase(config.mongo_url)
 const db = eco.mongo()
 exports.run = async (bot, message, args) => {
     const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
-    if(guildPrefix === null) guildPrefix = config.prefix;
-    if(!message.content.startsWith(guildPrefix))return;  
+  var prefix = (!guildPrefix) ? config.prefix : guildPrefix;;
+    if(!message.content.startsWith(prefix))return;  
     // If the member doesn't have enough permissions
     if(!message.member.hasPermission('MANAGE_MESSAGES')){
         return message.channel.send(':x: You need to have the manage messages permissions to reroll giveaways.');
@@ -39,9 +41,9 @@ exports.run = async (bot, message, args) => {
 
 };
 module.exports.help = {
-    name: "reroll-giveaway",
+    name: "reroll",
     type: "giveaway",
     usage: "`reroll-giveaway <message_id>`",
     about: "Reroll giveaways!",
-    aliases: [""]
+    aliases: ["reroll-giveaway"]
   };
