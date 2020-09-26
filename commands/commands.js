@@ -57,7 +57,7 @@ module.exports.run = async (bot, message, args) => {
     generalCommands +
     '\n\n :white_small_square: **Play games earn coins; commands** \n' +
     gamesCommands +
-    '\n\n :white_small_square: **Do giveaway by these commands** \n' +
+    '\n\n :white_small_square: **Do giveaway by these commands [beta]** \n' +
     giveawayCommands +
     '\n\n :white_small_square: **Some fun and economy commands** \n' +
     funCommands +
