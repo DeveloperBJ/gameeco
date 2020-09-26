@@ -36,7 +36,7 @@ module.exports.run = async (client, message, args) => {
   function getImageUrl() {
     let imgURL = /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/;
     if (args[0] == null) {
-      return post.setTitle(`**Please add some content**`);
+      return post.setDescription(`**Empty Embed?** Add some content `/`${prefix}post content`/` `);
     } else if (imgURL.test(args[0])) {
       return post.setImage(tagName);
     }
@@ -80,6 +80,6 @@ module.exports.help = {
   name: "post",
   type: "general",
   usage: "post <image_url> <post_content>",
-  about: "To make a emebed with image through the bot",
+  about: "To make a embed with image /without image through the bot",
   aliases: [""]
 }
