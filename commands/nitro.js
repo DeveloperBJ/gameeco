@@ -11,7 +11,10 @@ module.exports.run = async (bot, message, args) => {
     var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
 
     if (!message.content.startsWith(prefix)) return;
-
+    let hasPerm = (message.guild.me.hasPermission("ADMINISTRATOR"));
+    if(!hasPerm){
+        return message.channel.send(`:/ I need `/`administrator`/` permission for this action! `)
+    }
     let cmd = prefix + module.exports.help.name + 1;
     let Addmsg = message.content.slice(cmd.length);
     const splitArgs = Addmsg.split(' ');
@@ -32,6 +35,10 @@ module.exports.run = async (bot, message, args) => {
         }else{
             return nickName;
         }
+    }
+    var bean = bot.emojis.cache.find(emoji => emoji.name == emote);
+    if(!bean){
+        return message.reply(`There is no animated emoji named `/`${emote}`/` \n I think you should uplaod some animated emoji: __server-settings>emojis__ `)
     }
 	try {
     message.delete();
