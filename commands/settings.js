@@ -11,8 +11,6 @@ module.exports.run = async (bot, message, args) => {
 
     if (!message.content.startsWith(prefix)) return;
 
-    if (message.author.bot) return;
-
     //   ===== if the user dont have perm =======
     if (!message.member.hasPermission("ADMINISTRATOR")) {
         return message.channel.send(`${config.error_icon} ` + "Only server's `admins` could use this command!")
@@ -32,17 +30,17 @@ module.exports.run = async (bot, message, args) => {
         .setTitle(`**SETTINGS FOR ${message.guild.name.toUpperCase()} ━━━━**`)
         .setTimestamp()
         .setFooter(`Requested by ${message.author.tag}`)
-        .setDescription('**:white_small_square: To change bot prefix for this guild** \n`' + prefix + 'change prefix <prefix>`' +
-            ' \n\n **:white_small_square: To turn on/off geeting messages** \n `' + prefix + 'change greetings off`' +
-            '\n\n **:white_small_square: To turn on/off welcome messages** \n `' + prefix + 'change welcome off` ' +
-            '\n\n **:white_small_square: To turn on/off notification ** \n `' + prefix + 'change notification on`')
+        .setDescription('**:white_small_square: To change bot prefix for this guild** \n`' + prefix + 'set prefix <prefix>`' +
+            ' \n\n **:white_small_square: To turn on/off geeting messages** \n `' + prefix + 'set greetings off`' +
+            '\n\n **:white_small_square: To turn on/off welcome messages** \n `' + prefix + 'set welcome off` ' +
+            '\n\n **:white_small_square: To turn on/off guide/tips ** \n `' + prefix + 'set tips on`')
 
 
     if (!args[0]) {
         return message.channel.send(change);
     }
     if (args[0] === 'prefix' && args[1] == null) {
-        message.channel.send('You have to specify the prefix something like this `' + prefix + 'change prefix f-`')
+        message.channel.send('You have to specify the prefix something like this `' + prefix + 'change prefix f+`')
     }
 
     if (args[0] === "prefix" && args[1].length > 3) {
@@ -83,12 +81,26 @@ module.exports.run = async (bot, message, args) => {
 
     } else if (args[0] === "welcome" && args[1] === "off") {
 
-        return message.channel.send(`This setting currently not availabe!`)
+        return message.channel.send(`This feature currently not availabe!`)
 
     } else if (args[0] === "welcome" && args[1] == null) {
 
-        return message.channel.send(`This setting currently not available at all!`)
+        return message.channel.send(`This feature not available!`)
 
+    } else if(args[0] === "tips" && args[1] == null){
+
+        return message.channel.send(`This feature not availble!`)
+        
+    } else if(args[0] === 'tips' && args=='off'){
+
+        eco.set(`tips_${message.guild.id}`, args[1])
+        return message.channel.send(`:white_check_mark: tips has turned **${args[1]}** `)
+
+    }else if(args[0] === 'tips' && args=='on'){
+
+        eco.delete(`tips_${message.guild.id}`)
+        return message.channel.send(`:white_check_mark: tips has turned **${args[1]}** `)
+        
     }
 
     // if (args.join("") === config.prefix) {
@@ -101,10 +113,10 @@ module.exports.run = async (bot, message, args) => {
 
 
 module.exports.help = {
-    name: "settings",
+    name: "set",
     type: "admin",
     usage: "`settings` or `change`",
     about: "Customize the things as per your needs.",
-    aliases: ["set", "setting", "change"],
+    aliases: ["change", "settings"],
 
 }
