@@ -52,8 +52,7 @@ bot.on("ready", async () => {
   const activities_list = [
     config.prefix + 'prefix',
     config.prefix + 'help',
-    config.prefix + 'commands',
-    "gg.gg/trexbot"
+    config.prefix + 'commands'
   ];
   setInterval(() => {
     const index = Math.floor(Math.random() * (activities_list.length - 1) + 1); // generates a random number between 1
