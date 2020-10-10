@@ -170,11 +170,10 @@ module.exports.run = async (bot, message, args) => {
     const guildPrefix = await eco.fetch(`prefix_${message.guild.id}`)
     var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
   if(!message.content.startsWith(prefix))return;  
-  
-  if(message.author.bot) return;
 //   if(!args[0]){
 //       await message.repy(`Rip! You have to specify a word ` + '`' + prefix +' fancy myname`')
 //   }
+  
   let fancyCmd = prefix + module.exports.help.name + 1;
   let FancyTextMsg = message.content.slice(fancyCmd.length);
   const user = message.mentions.users.first();
@@ -182,9 +181,9 @@ module.exports.run = async (bot, message, args) => {
   function genName(){
       if(!args[0]){
           return message.author.username;
-      }else if(args[0]=== user.username){
+      }else if(user){
           return user.username;
-      }else{
+      }else if (!user) {
           return FancyTextMsg;
       }
   }
@@ -231,11 +230,11 @@ function getHexColor(){
     .addField(':white_small_square: FONTS WITHOUT SYMBOLS', '```'+  fancy_style_1() + 
     '\n' + fancy_style_2() + '\n' +  fancy_style_4() + '\n' + fancy_style_5() + '```')
     .addField(`:white_small_square: COOL SYMBOLS & SIGNS`, '\n\n`••¤(×[¤ name ¤]×)¤••`'+
-    ' `꧁ name ꧂` `░▒▓█►name◄█▓▒░` `𓊈𒆜 name 𒆜𓊉` ')
+    ' `★彡 name 彡★` `𓊈𒆜 name 𒆜𓊉` ')
     .setFooter(`@${bot.user.username} displaying data using its own api.`)
         const p = await message.channel.send("Generating .....")
       
-    return setTimeout(function(){ p.edit(`Generated`); }, 2200), p.edit(embed);
+    return setTimeout(function(){ p.edit(`Generated`), p.edit(embed); }, 2200);
 
 }
 
