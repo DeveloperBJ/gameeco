@@ -116,5 +116,5 @@ module.exports.help = {
   type: "general",
   usage: "post <image_url> <post_content>",
   about: "To make a embed with image through the bot",
-  aliases: [""]
+  aliases: ["makeembed"]
 }
