@@ -63,5 +63,5 @@ module.exports.help = {
     type: "fun",
     usage: `a`,
     about: "To use animated emojis",
-    aliases: [""]
+    aliases: ["animateemoji"]
 };
