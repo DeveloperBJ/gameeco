@@ -31,10 +31,17 @@ module.exports.run = async (bot, message, args) => {
     }
   });
 
-  if (msg === "") {
+  if (!args[0]) {
     let embed = new Discord.MessageEmbed()
       .setColor(getHexColor())
-      .addField(`Learn how to use a command ━━`, `1. ` + "To display command list - `" + prefix + "commands` \n " + "2. Learn more about a command - `" + prefix + "help [command_name]`")
+      .setDescription(`**HELP CENTER** ━━ \n`)
+      .setThumbnail(bot.user.displayAvatarURL())
+       .addField(`Commands`, `__${prefix}all__`, true)
+       .addField(`Info`, `__${prefix}info <command>__`, true)
+       .addField(`Settings`, `__${prefix}settings__`, true)
+       .addField(`Docs`, `[Documentation](${process.env.Link})`, true)
+       .addField(`Report`, `[Repot a bug](${process.env.report})`, true)
+       .addField(`Feedback`, `__${prefix}feedback__`, true)
     message.channel.send(embed);
   }
 };
@@ -44,5 +51,5 @@ module.exports.help = {
   type: "admin",
   usage: "help <command_name>",
   about: "Learn about a command",
-  aliases: ["learn", 'wiki', 'about']
+  aliases: ["learn", 'info','wiki', 'support','about']
 };
