@@ -18,6 +18,7 @@ module.exports.run = async (client, message, args) => {
       return mColor;
     }
    }
+
   
   let Logs = ["Hold on...", "Fetching accound details...", "collecting data...", "Here's your account balance..."]
   let RandomLogs = Math.floor((Math.random() * Logs.length));
@@ -34,10 +35,9 @@ module.exports.run = async (client, message, args) => {
   .setTimestamp()
   .setFooter(`Requested by ${message.author.tag}`)
   .setColor(getHexColor())
-  setTimeout(function(){ m.edit(`ahaha...data collected!`); }, 2200), 
-  m.edit(account);
+  setTimeout(function(){ m.edit(`ahaha...I got it!`), m.edit(account); }, 1500)
+  } 
   
-};
 
 
 module.exports.help = {
@@ -45,5 +45,5 @@ module.exports.help = {
     type:"fun",
     usage:"`bal` or `balance`",
     about:"To display how many coins user have.",
-    aliases: ["bal"]
+    aliases: ["bal", "acc"]
   };
