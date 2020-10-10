@@ -52,7 +52,8 @@ bot.on("ready", async () => {
   const activities_list = [
     config.prefix + 'prefix',
     config.prefix + 'help',
-    config.prefix + 'commands'
+    config.prefix + 'commands',
+    "gg.gg/trexbot"
   ];
   setInterval(() => {
     const index = Math.floor(Math.random() * (activities_list.length - 1) + 1); // generates a random number between 1
@@ -195,6 +196,26 @@ bot.on("message", async message => {
   if (message.content.startsWith('Good Night')) {
     await message.channel.send(gns[randomGns]);
   }
+
+  if(message.content=== prefix + 'ping'){
+    const m = await message.channel.send("Hold on .....")
+    function getHexColor(){
+      let mColor = message.member.displayHexColor;
+      if(mColor == null){
+        return config.primary;
+      }else{
+        return mColor;
+      }
+     }
+    let pong = new Discord.MessageEmbed()
+    .setTitle("🏓 Pong!")
+    .setColor(getHexColor())
+    .setTimestamp()
+    .addField("Latency", `${m.createdTimestamp - message.createdTimestamp}ms`, true)
+    .addField("API Latency", `${Math.round(bot.ws.ping)}ms `, true)
+    .setFooter(`Requested by ${message.author.tag}`);
+    m.edit(pong)
+  }
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
   // ====== Fortrex =====
   if (message.mentions.has(bot.user)) {
@@ -227,4 +248,3 @@ bot.on("message", async message => {
 })
 
 bot.login(process.env.TOKEN);
-
