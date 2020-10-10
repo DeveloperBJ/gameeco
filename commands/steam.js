@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
   var prefix = (!guildPrefix) ? config.prefix : guildPrefix;
   // if (!message.content.startsWith(prefix)) return;
   if (!args[0]) {
-    console.log('Please specify the game, like this `'+ prefix +'steam dota 2`')
+    message.channel.send('Please specify the game, like this `'+ prefix +'steam dota 2`')
   }
 
   let conName = prefix + module.exports.help.name + 1;
