@@ -84,5 +84,5 @@ module.exports.help = {
     usage:"`gamble <color_name> <amount>`",
     about:"Collect coins by playing slot game [color_names: red blue green]",
     aliases: ["roul"],
-  
+ 
   }
