@@ -68,5 +68,5 @@ module.exports.help = {
   type: "general",
   usage: '`steam <game_name>`',
   about: 'To display live stats of any game thats available on steam',
-  aliases: []
+  aliases: ["steampowered"]
 };
