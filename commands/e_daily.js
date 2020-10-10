@@ -20,7 +20,7 @@ module.exports.run = async (client, message, args) => {
   const db = eco.mongo()
 
   // Fetch the time of last Beg...
-  let lastBeg = await db.fetch(`lastDaily_${message.author.id}`)
+  let lastBeg = await eco.fetch(`lastDaily_${message.author.id}`)
 
   // Then setup the amount to give after beg...
   let amount = Math.floor(Math.random() * 800)
@@ -39,7 +39,7 @@ module.exports.run = async (client, message, args) => {
     eco.add(message.author.id, amount)
 
     // Then set the cooldown...
-    db.set(`lastDaily_${message.author.id}`, Date.now())
+   eco.set(`lastDaily_${message.author.id}`, Date.now())
 
   }
 
