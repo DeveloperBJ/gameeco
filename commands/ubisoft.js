@@ -50,13 +50,7 @@ module.exports.run = async (bot, message, args) => {
           WeaponEmbed.addField("Price", `${getItemPrice}`, true);
           WeaponEmbed.setFooter(`Displaying data from ubisoft © 2020 ${bot.user.username}`);
           
-          message.channel.startTyping();
-
-          setTimeout(() => {
-            message.channel.send(WeaponEmbed).then(message => {
-              message.channel.stopTyping();
-            });
-          }, 2000);
+          await message.channel.send(WeaponEmbed);
           // console.log(WeaponIcon);
         }
       
