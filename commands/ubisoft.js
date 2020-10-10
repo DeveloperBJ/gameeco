@@ -50,7 +50,7 @@ module.exports.run = async (bot, message, args) => {
           WeaponEmbed.addField("Price", `${getItemPrice}`, true);
           WeaponEmbed.setFooter(`Displaying data from ubisoft © 2020 ${bot.user.username}`);
           
-          await message.channel.send(WeaponEmbed);
+          message.channel.send(WeaponEmbed);
           // console.log(WeaponIcon);
         }
       
@@ -64,5 +64,5 @@ module.exports.help = {
   type: "general",
   usage: '`ubi <game_name>`',
   about: 'Explore the ubisoft store',
-  aliases: ["ubi", "ubistore"]
+  aliases: []
 };
