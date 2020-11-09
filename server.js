@@ -53,7 +53,7 @@ bot.on("ready", async () => {
     config.prefix + 'prefix',
     config.prefix + 'help',
     config.prefix + 'commands',
-    "gg.gg/trexbot"
+    `@mention`
   ];
   setInterval(() => {
     const index = Math.floor(Math.random() * (activities_list.length - 1) + 1); // generates a random number between 1
@@ -115,8 +115,10 @@ bot.on("message", async message => {
     "...that was funny?",
     "...xD", "..cool!", "...noice!", "damn cool!",
     "...lol", "ahaha..", "Owo....", "...ahaha",
-    "...is that joke?", "...how many lol xD.",
-    `${message.author.username} nice try!`, `${message.author.username} ...lul`
+    "...is that joke?", "...how funny xD.",
+    `${message.author.username} nice try!`, `${message.author.username} ...lel`,
+    `${message.author.username} ...ahaha cool`, `${message.author.username} ...ahaha lel`,
+    `${message.author.username} ...ooops noice!`, `${message.author.username} ...damn!`
   ];
   let RandomLogs = Math.floor((Math.random() * Logs.length));
 
